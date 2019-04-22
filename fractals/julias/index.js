@@ -5,7 +5,9 @@ let c2=0;
 let exposant=0|0;
 
 rs.value=2;
-rslider.oninput= function(){
+rslider.value=0;
+islider.value=0;
+rslider.oninput=()=>{
 	c1 = Number(rslider.value);
 	if(c2>=0){
 		cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
@@ -15,7 +17,7 @@ rslider.oninput= function(){
 	}
 
 }
-islider.oninput=function(){
+islider.oninput=()=>{
 	c2=Number(islider.value);
 	if(c2>0){
 		cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";

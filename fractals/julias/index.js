@@ -3,6 +3,8 @@ let r,i=0;
 let c1=0;
 let c2=0;
 let exposant=0|0;
+
+rs.value=2;
 rslider.oninput= function(){
 	c1 = Number(rslider.value);
 	if(c2>=0){
@@ -28,7 +30,7 @@ iterslider.oninput=()=>{
 }
 rs.oninput=()=>{
 	exposant=rs.value
-	raison.innerHTML="Raison de la suite:"+exposant;
+	raison.innerHTML="Exposant de la suite:"+exposant;
 	
 }
 

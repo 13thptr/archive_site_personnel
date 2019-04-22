@@ -9,22 +9,16 @@ rslider.value=0;
 islider.value=0;
 rslider.oninput=()=>{
 	c1 = Number(rslider.value);
-	if(c2>=0){
-		cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
-	}
-	else{
-		cmplx.innerHTML="Ensemble de Julia défini en "+c1+""+"i.";
-	}
+	cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
+	
+	
+
 
 }
 islider.oninput=()=>{
 	c2=Number(islider.value);
-	if(c2>0){
-		cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
-	}
-	else{
-		cmplx.innerHTML="Ensemble de Julia défini en "+c1+""+c2+"i.";
-	}
+	cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
+
 }
 iterslider.oninput=()=>{
 	MAX_ITER=Number(iterslider.value);

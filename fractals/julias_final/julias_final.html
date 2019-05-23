@@ -1,0 +1,34 @@
+<!--Cette version apporte de derniers changements comme l'ajout d'une barre de progression et d'un indicateur du temps restant, de sliders à sensibilité réglable,d'une palette de couleurs,d'un mode de coloration et d'un nombre d'itérations modifiables ainsi que d'optimisations diverses. -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Représentation graphique des ensembles de Julia</title>
+</head>
+<body>
+	<canvas id="canvas" width="512" height="512" style="border:1px solid #0ff0f0"></canvas>
+	<div id="options">
+		<p id="iterp">Nombre d'itérations souhaité:20</p>
+		<input type="range" min="1" max="500" id="iterSlider" step="1" value="40">
+		<p id="raison">Exposant de la suite:2</p>
+		<input type="number" min="2" max="12" placeholder="2" id="rs">
+	</div>
+	<br>
+	<p>zᵣ</p>
+	<input type="range" min="-2" max="2" id="Rslider" step="0.001" value="0">
+	<br>
+	<p>zᵢ</p>
+	<input type="range" min="-2" max="2" id="Islider" step="0.001" value="0">
+	<p id="cmplx">Ensemble de Julia défini en 0+0i</p>
+	<button onclick="Generer()">Générer</button>
+	<div id="tps_restant">
+		<!--<canvas id="progression" width="200" height="20" style="border:1px solid #dead"></canvas>-->
+		<p id="progression"></p>
+	</div>
+	<script src="libmath.js"></script>
+	<script src="defs.js"></script>
+	<script src="index.js"></script>
+
+
+</body>
+</html>

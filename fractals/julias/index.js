@@ -55,13 +55,6 @@ function Generer(){
 		let z=[r,i];
 		
 		for(let e=0|0;e<MAX_ITER;e++){
-
-			/*couleur=hsl2rgb(360/MAX_ITER*e+100,1,.5);
-			rouge=couleur[0]*256;
-			vert=couleur[1]*256;
-			bleu=couleur[2]*256;
-			*/
-
 			rouge=6.5*e+30;
 			vert=3.5*e+30;
 			bleu=8.5*e+30;

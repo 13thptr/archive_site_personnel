@@ -10,10 +10,6 @@ islider.value=0;
 rslider.oninput=()=>{
 	c1 = Number(rslider.value);
 	cmplx.innerHTML="Ensemble de Julia défini en "+c1+"+"+c2+"i.";
-	
-	
-
-
 }
 islider.oninput=()=>{
 	c2=Number(islider.value);
@@ -30,7 +26,6 @@ rs.oninput=()=>{
 	
 }
 
-
 function Generer(){
 	
 	c1=Number(rslider.value);
@@ -44,57 +39,49 @@ function Generer(){
 	let X=0|0;
 	let Y=0|0;
 	let index=0|0;
-	/*if(!raison||raison<0||raison!==(raison|0)){
-	alert("Veuillez entrer une valeur d'exposant valide.Le programme ne prend pas encore en charge les exposants négatifs et non entiers");
-	throw "err"
-	}*/
+	let couleur=[];
+	let mod_z=0;
+
 	if(!exposant)exposant=2;
 	let imgData=new ImageData(LARGEUR,HAUTEUR);
 	let LONGUEUR=LARGEUR*HAUTEUR;
+
 	for(let k=0|0;k<LONGUEUR;k++){
 		index=k*4;//après un test de performance, on s'aperçoit que k<<2 n'est pas plus rapide
 		X=k%LARGEUR;
 		Y=k/HAUTEUR|0;
     	r=(X-DECALAGE_DROITE)*RATIO;
 		i=(Y-DECALAGE_BAS)*RATIO;
+		let z=[r,i];
 		
 		for(let e=0|0;e<MAX_ITER;e++){
-			rouge=4*e;
-			vert=7*e;
-			bleu=8*e;
+
+			/*couleur=hsl2rgb(360/MAX_ITER*e+100,1,.5);
+			rouge=couleur[0]*256;
+			vert=couleur[1]*256;
+			bleu=couleur[2]*256;
+			*/
+
+			rouge=6.5*e+30;
+			vert=3.5*e+30;
+			bleu=8.5*e+30;
+
 			if(e==MAX_ITER-1){
 				rouge=bleu=vert=0;
 			}
 
-
-			if(appartientJulia(exposant,[r,i],[c1,c2],e)){
+			z=ajoute(puissance(z,exposant),[c1,c2]);
+			mod_z=moduleCarre(z);
+    		if(mod_z<4||e==0){
     			imgData.data[index]=rouge;
     			imgData.data[index+1]=vert
     			imgData.data[index+2]=bleu;
-    			imgData.data[index+3]=alpha;
+    			imgData.data[index+3]=alpha;	
     		}
     		
     	}
-    	
     }
-    
     ctx.putImageData(imgData,0,0);
+    
 }
 
-function appartientJulia(exposant,z,c,iter_max){
-	let p=0;
-	let mod_z=0;
-	let iter=0;
-	while(mod_z<4&&iter<iter_max){
-		z=ajoute(puissance(z,exposant),c);
-		mod_z=moduleCarre(z);
-		iter++;
-	}
-
-	if(mod_z<4){
-    	return true;
-    }
-    	return false;
-			
-
-}

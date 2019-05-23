@@ -33,18 +33,3 @@ ajoute=(z1,z2)=>{
 	return res;
 
 }
-appartientJulia=(z,c,iter_max)=>{
-	let p=0;
-	let mod_z=0;
-	let iter=0;
-	while(mod_z<4&&iter<iter_max){
-	z=ajoute(puissance(z,5),c);
-	mod_z=moduleCarre(z);
-	iter++;
-	}
-
-	if(mod_z<4){
-    	return true;
-    }
-    	return false;			
-}

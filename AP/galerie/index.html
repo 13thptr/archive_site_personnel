@@ -33,6 +33,8 @@
 		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 		scene.add(light);
 
+		var controls = new THREE.OrbitControls(camera);
+
 		var loader = new THREE.GLTFLoader();
 		loader.load(
 		// resource URL

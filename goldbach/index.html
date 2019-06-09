@@ -5,35 +5,38 @@
 	<meta charset="UTF-8">
 </head>
 <body>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+	<!--<link rel="stylesheet" href="default.css">-->
+	<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/monokai-sublime.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 	<h1>Comète de Goldbach</h1>
+	<p>Page en cours de rédaction...</p>
 	<p>La comète de Goldbach est le tracé de la fonction g(n) qui à un entier naturel pair n associe le nombre de façons de décomposer ce nombre comme une somme de nombres premiers.
 	<br>
 	Elle découle de la conjecture de Goldbach qui stipule que tout nombre entier pair supérieur à 2 peut s'écrire comme une somme de deux nombres premiers.</p>
 	<p>Sur cette page, vous trouverez les différentes itérations de mon implémentation de la comète de Goldbach</p>
-	<p>Version 1-"naïve":
+	<h3>Version 1-"naïve":
 		<br>
 		Quelle est la façon la plus simple d'obtenir un résultat ? La force brute bien sûr!
-	</p>
+	</h3>
 	<pre>
 		<code class="javascript">
-			let goldbach=(n)=>{
-			let f=0;//Le nombre de façons différentes de décomposer n comme une somme de nombre premiers
-			let i=0;
-			let j=0;
-			let somme=0;
-			for(i=0;i&#60;n;i++){
-				for(j=0;j&#60;n;j++){
-					somme=i+j;
-					if(somme==n&&estPremier(i)&&estPremier(j)){
-						f++;
-					}	
-				}
-			}	
-		return f/2;//On compte 2 fois trop de possibilités puisque i+j=j+i 
-
-		}
+let goldbach=(n)=>{
+let f=0;//Le nombre de façons différentes de décomposer n comme une somme de nombre premiers
+let i=0;
+let j=0;
+let somme=0;
+for(i=0;i&#60;n;i++){
+	for(j=0;j&#60;n;j++){
+		somme=i+j;
+		if(somme==n&&estPremier(i)&&estPremier(j)){
+			f++;
+		}	
+	}
+}	
+return f/2;//On compte 2 fois trop de possibilités puisque i+j=j+i 
+}
 		</code>
 	</pre>
 		

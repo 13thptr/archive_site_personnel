@@ -21,7 +21,7 @@ function goldbach(n,premiers)
 
   
     for(let k=0;k<n/2+1;k++){
-        if(premiers[n-k]&&premiers[k]){
+        if(estPremier(n-k)&&estPremier(k)){
             termes++;
             
         }
@@ -54,10 +54,15 @@ x1.font="10px Comic Sans MS";
 function u1(){  
     for(let Y=0;Y<TAILLE/4;Y++){
         if(goldbach(X,premiers)==Y){
-            x1.fillText("+",X,c1.height-Y*20);
+            x1.fillText("+",X,c1.height-Y*8);
         }
     }
     X+=2
-    requestAnimationFrame(u1);
+    if(X<c1.width){
+        requestAnimationFrame(u1);
+    }
+    else{
+        cancelAnimationFrame(u1);
+    }
 }
 	

@@ -5,6 +5,8 @@
     <title>{{ page.title }}</title>
   </head>
   <body>
+    {% include navigation.html %}
     {{ content }}
+    {% include disqus.html %}
   </body>
 </html>

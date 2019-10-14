@@ -1,3 +1,3 @@
 ---
 ---
-##Cauliflower & squash fritters with mint & feta dip
+## Cauliflower & squash fritters with mint & feta dip

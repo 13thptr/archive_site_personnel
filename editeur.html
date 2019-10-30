@@ -18,8 +18,8 @@
 			-1 petite pour projection normale, 
 			-1 plus détaillée pour échantillonnage et transformée de Fourier
 			*/
-			const nbCasesLigne=16;
-			const nbCasesColonne=16;
+			const nbCasesLigne=32;
+			const nbCasesColonne=32;
 			let rx=c.width/nbCasesLigne;
 			let ry=c.height/nbCasesColonne;
 			for(let i=0;i<nbCasesLigne;i++){
@@ -27,9 +27,6 @@
 					x.strokeRect(i*rx,j*ry,rx,ry);
 				}
 			}
-			let h,s,l;
-		
-
 			let tab=new Uint8Array(nbCasesLigne*nbCasesColonne);
 			c.onclick=e=>
 			{
@@ -41,8 +38,9 @@
 				x.clearRect(X*rx,Y*ry,rx,ry);
 				(tab[index]%2==1)&&x.fillRect(X*rx,Y*ry,rx,ry);
 				localStorage.setItem("sauvegarde_dessin",tab);
-				//let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>String.fromCharCode(parseInt(e,2)))
-				let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>parseInt(e,2).toString(16)+"Z").join``;
+				
+				let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>parseInt(e,2).toString(16)+"Z").join``
+				
 				
 				console.log(cmprs);
 				tong.innerHTML=cmprs;

@@ -42,8 +42,8 @@
 				(tab[index]%2==1)&&x.fillRect(X*rx,Y*ry,rx,ry);
 				localStorage.setItem("sauvegarde_dessin",tab);
 				//let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>String.fromCharCode(parseInt(e,2)))
-				//let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>parseInt(e,2).toString(16));
-				let cmprs=tab.map(e=>!!e).join``;
+				let cmprs=tab.map(e=>!!e).join``.match(/.{1,16}/g).map(e=>parseInt(e,2).toString(16)+"Z").join``;
+				
 				console.log(cmprs);
 				tong.innerHTML=cmprs;
 			}

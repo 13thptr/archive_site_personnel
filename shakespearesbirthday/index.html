@@ -11,12 +11,13 @@
 	<canvas id="c2" style="position:absolute;left:0px;top:0px;z-index:1;"width="768" height="512"></canvas>
 	<button id="fl" style="position:absolute;left:10px;top:545px">Hide arrows (faster)</button>
 	<button id="cl" style="position:absolute;left:10px;top:575px">Show circles (slower)</button>
+	<button id="restart" style="position:absolute;left:10px;top:605px" onclick="restart()">Restart animation</button>
+	<p style="position:absolute;left:10px;top:645px">Explanation: <br> I wanted to draw a portrait of you, but as I am totally unable to do so in a decent way, I decided to let a machine do the job. What you'll hopefully see when I'm completely done is something mechanical, but I admit it may seem like the Ghost is drawing in front of you right now... you're not supposed to be afraid of these anymore though, are you ? :D</p>
 	<script src="libcmplx.js"></script>
 	<!--Points (échantillons de la fonction complexe)-->
 	<script src="coords.js"></script>
 	<!--Script pour la gestion des entrees/fichiers,etc.-->
 	<script src="libutil.js"></script>
-	<script src="main.js"></script>
 	<script>
 	let ZOOM=20;
 	let frame=0;
@@ -47,18 +48,25 @@
 	let angle=0;
 	let bg=new Image();
 	bg.src="img/wood.jpg";
-	bg.onload=()=>{
-			bg.width*=4;
-			bg.height*=4;
+	function drawBackground(){
 			x1.scale(4,4);
 			x1.drawImage(bg,0,0);
 			x1.scale(0.25,0.25);
 			x1.fillStyle="tan";
 			x1.fillRect(75,0,400,480);
-			x1.fillStyle="#292929"
-		}
+			x1.fillStyle="#292929";
+	}
+	bg.onload=()=>{
+		drawBackground();
+	}
 
 	x2.strokeStyle="black";
+	function restart(){
+		x1.clearRect(0,0,c1.width,c1.height);
+		drawBackground();
+		frame=0;//bouhh une globale
+		anim();
+	}
 	function anim(){
 		x2.clearRect(0,0,c2.width,c2.height);//On efface le contenu du canevas
 		x2.fillStyle="black";
@@ -103,7 +111,7 @@
 		t=frame/60;
 		requestAnimationFrame(anim);
 	}
-	anim();
+	anim(0);
 	</script>
 </body>
 </html>

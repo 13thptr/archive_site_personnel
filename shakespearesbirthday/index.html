@@ -11,7 +11,8 @@
 	<canvas id="c2" style="position:absolute;left:0px;top:0px;z-index:1;"width="768" height="512"></canvas>
 	<button id="fl" style="position:absolute;left:10px;top:545px">Hide arrows (faster)</button>
 	<button id="cl" style="position:absolute;left:10px;top:575px">Show circles (slower)</button>
-	<button id="restart" style="position:absolute;left:10px;top:605px" onclick="restart()">Restart animation</button>
+	<button id="arm" style="position:absolute;left:10px;top:605px">Hide arm (faster)</button>
+	<button id="restart" style="position:absolute;left:10px;top:635px" onclick="restart()">Restart animation</button>
 	<p style="position:absolute;left:10px;top:645px">Explanation: <br> I wanted to draw a portrait of you, but as I am totally unable to do so in a decent way, I decided to let a machine do the job. What you'll hopefully see when I'm completely done is something mechanical, but I admit it may seem like the Ghost is drawing in front of you right now... you're not supposed to be afraid of these anymore though, are you ?</p>
 	<script src="libcmplx.js"></script>
 	<!--Points (échantillons de la fonction complexe)-->
@@ -25,25 +26,10 @@
 	const CENTRE_X=256;
 	const CENTRE_Y=256;
 	//Todo:éliminer cette étape
-
-
 	let coefficients=TFD(reformate,1000);
 	coefficients=coefficients.map(e=>[e,argument(e)]);
-	//coefficients.sort(function compare(a,b){coefficients})
-	console.log(coefficients);
 	const N=coefficients.length;
-	
-	//fond noir pour le canevas n°1 (le noir est la couleur par défaut de la méthode fillRect)
-	//x1.fillRect(0,0,1024,1024);
-	//une fois le rectangle/fond affiché, on change la couleur de remplissage (jaune)
-	x1.fillStyle="#ffea29";
 	x1.fillStyle="black";
-	/*-----------Zone dans laquelle on va afficher une portion zoomée de l'image----------*/
-	x1.strokeStyle="#f008";
-	//x1.strokeRect(510,80,180,100);
-	x1.font="1cm Computer Modern";
-	//x1.fillText("Zoom:",550,50);
-
 	let X=Y=precX=precY=0;
 	let angle=0;
 	let bg=new Image();
@@ -67,6 +53,12 @@
 		frame=0;//bouhh une globale
 		anim();
 	}
+	function sortArrowsByLength(coefficients){
+		for(let elem in coefficients){
+			let arrow_length=module(elem[0]);
+		}
+		return sortedCoefficients;
+	}
 	function anim(){
 		x2.clearRect(0,0,c2.width,c2.height);//On efface le contenu du canevas
 		x2.fillStyle="black";
@@ -86,6 +78,13 @@
 			x2.translate(precX,precY);
 			x2.rotate(-arg);
 			fl_toggled&&x2.fill(new Path2D(fleche(0,0,mod)));//On dessine la flèche
+			/*
+			if(arm_toggled){	
+				//dessin des rectangles
+				//dessin des cercles concentriques
+				//engrenages
+			}
+			*/
 			/*On rétablit la matrice de transformation(->identité) du canevas, ce qui annule la rotation et la translation appliquées auparavant*/
 			x2.setTransform(1,0,0,1,0,0);
 			z=ajoute(z,vecteur_courant);
@@ -105,13 +104,16 @@
 		x1.drawImage(c1,X-36,Y-20,72,40,510,80,180,100);
 		*/
 		
-		x1.fillRect(X,Y,3,3);
+		x1.beginPath();
+		//x1.fillRect(X,Y,3,3);
+		x1.arc(X,Y,3,0,7);
+		x1.fill();
 		
 		frame+=2;
 		t=frame/60;
 		requestAnimationFrame(anim);
 	}
-	anim(0);
+	anim();
 	</script>
 </body>
 </html>

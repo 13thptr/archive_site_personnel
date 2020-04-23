@@ -61,6 +61,7 @@ function TFD(fonction,N){
 		//liste_phases.push(θ);
 		//liste_rayons.push(R);
 		liste_coefs.push(cn);
+
 	}
 	
 	//return [liste_coefs,liste_rayons,liste_phases];

@@ -22,19 +22,29 @@ function fleche(X,Y,u){
 }
 /*
 Renvoie une liste contenant plus de points
+Màj du 23 avril 2020: j'ai appris depuis qu'il s'agissait d'une interpolation,
+je renomme donc la fonction "intercale" "interpole" 
 */
-function intercale(points){
-	for(i=0;i<points.length;i+=2){
-		let X_prev=points[i][0];
-		let Y_prev=points[i][1];
-		let X_next=[i+1][0];
-		let Y_next=[i+1][1];
-		let avg_X=X_prev+X_next/2;
-		let avg_Y=Y_prev+Y_next/2;
-		points.splice(i+1,0,[avg_X,avg_Y])
-	}
-	return points;
+function interpole(liste){
+	//liste de listes :[[a,b],[c,d],...,[y,z]]
+	let interpolee=[];
+	
+		for(i=0;i<liste.length;i+=2){
+			let xp=liste[i][0];
+			let yp=liste[i][1];
+			if(liste[i+1]){
+				let xs=liste[i+1][0];
+				let ys=liste[i+1][1];
+				interpolee.push([xp,yp],[(xp+xs)/2,(yp+ys)/2],[xs,ys]);
+			}
+			else{
+				interpolee.push([xp,yp]);
+			}
+		}
+	
+	return interpolee;
 }
+console.log("Test interpolation", interpole([[10,15],[30,40]],3));
 
 /*
 Obtention des contextes de dessin pour les deux élements <canvas>:
@@ -48,38 +58,23 @@ let VITESSE=1;
 	
 const bouton_fl=document.getElementById`fl`;
 const bouton_cl=document.getElementById`cl`;
+const armbutton=document.getElementById`arm`;
 
 //const slider_coefs=document.getElementById`coefsNb`;
 //const slider_vitesse=document.getElementById`vitesse`;
 //const slider_zoom=document.getElementById`zoom`;
 let fl_toggled=true;
 let cl_toggled=false;
-
+let arm_toggled=true;
 
 
 let reformate=[];
 for(let i=0;i<coords.length;i+=2){
 	reformate.push([(coords[i])/2e3,(coords[i+1])/2e3]);
 }
+//reformate=interpole(interpole(interpole(reformate)));
 console.log(reformate)
-//Todo:ajouter échelle logarithmique pour le nombre de coefficients
-/*slider_coefs.oninput=()=>{
-	frame=0;
-	t=0;
-	NOMBRE_COEFS=slider_coefs.value|0;	
-}
 
-slider_vitesse.oninput=()=>{
-	frame=0;
-	t=0;
-	VITESSE=slider_vitesse.value|0;
-	VITESSE/=10;
-	document.getElementById`vitp`.innerHTML="Vitesse de l'animation (unité arbitraire):"+VITESSE;
-}
-slider_zoom.oninput=()=>{
-	ZOOM=Number(slider_zoom.value);
-}
-*/
 
 
 bouton_fl.onclick=()=>{
@@ -100,5 +95,15 @@ bouton_cl.onclick=()=>{
 	else{
 		cl_toggled=true;
 		bouton_cl.innerHTML="Hide circles (faster)";
+	}
+}
+armbutton.onclick=()=>{
+	if(arm_toggled){
+		arm_toggled=false;
+		armbutton.innerHTML="Show arm (slower)";
+	}
+	else{
+		arm_toggled=true;
+		armbutton.innerHTML="Hide arm (faster)";
 	}
 }

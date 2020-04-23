@@ -77,7 +77,7 @@ console.log(reformate)
 
 
 
-bouton_fl.onclick=()=>{
+/*bouton_fl.onclick=()=>{
 	if(fl_toggled){
 		fl_toggled=false;
 		bouton_fl.innerHTML="Show arrows (slower)";
@@ -96,7 +96,7 @@ bouton_cl.onclick=()=>{
 		cl_toggled=true;
 		bouton_cl.innerHTML="Hide circles (faster)";
 	}
-}
+}*/
 armbutton.onclick=()=>{
 	if(arm_toggled){
 		arm_toggled=false;

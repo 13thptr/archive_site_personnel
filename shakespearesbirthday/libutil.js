@@ -70,7 +70,7 @@ let arm_toggled=true;
 
 let reformate=[];
 for(let i=0;i<coords.length;i+=2){
-	reformate.push([(coords[i])/2e3,(coords[i+1])/2e3]);
+	reformate.push([(coords[i]-100)/2e3,(coords[i+1]-150)/2e3]);
 }
 //reformate=interpole(interpole(interpole(reformate)));
 console.log(reformate)

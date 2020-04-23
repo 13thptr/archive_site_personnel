@@ -22,13 +22,18 @@
 	<script>
 	let ZOOM=20;
 	let frame=0;
-	let t=0;
-	const CENTRE_X=256;
-	const CENTRE_Y=256;
+	const CENTRE_X=140;
+	const CENTRE_Y=130;
 	//Todo:éliminer cette étape
 	let coefficients=TFD(reformate,1000);
-	coefficients=coefficients.map(e=>[e,argument(e)]);
+	coefficients=coefficients.map(e=>[e,module(e)]);
 	const N=coefficients.length;
+	
+	/*coefficients.sort(function(first, second) {
+  		return second[1] - first[1];
+	});
+	*/
+	
 	x1.fillStyle="black";
 	let X=Y=precX=precY=0;
 	let angle=0;
@@ -53,15 +58,11 @@
 		frame=0;//bouhh une globale
 		anim();
 	}
-	function sortArrowsByLength(coefficients){
-		for(let elem in coefficients){
-			let arrow_length=module(elem[0]);
-		}
-		return sortedCoefficients;
-	}
+
+
 	function anim(){
 		x2.clearRect(0,0,c2.width,c2.height);//On efface le contenu du canevas
-		x2.fillStyle="black";
+		x2.fillStyle="#cd7f32";
 		angle=2*Math.PI*frame*VITESSE/N;
 		
 		let z=[0,0];
@@ -70,14 +71,15 @@
 			let vecteur_courant=mult(coefficients[n][0],e(angle*n));
 			let mod=module(vecteur_courant);
 			let arg=Math.atan2(vecteur_courant[0],vecteur_courant[1]);
-			precX=z[0]//+CENTRE_X;
-			precY=z[1]//+CENTRE_Y;
+			precX=z[0]+CENTRE_X;
+			precY=z[1]+CENTRE_Y;
 
-			cl_toggled&&(x2.beginPath(),x2.arc(precX,precY,mod,0,7),x2.stroke())
+			arm_toggled&&(mod<80)&&(x2.beginPath(),x2.arc(precX,precY,mod,0,7),x2.fill(),x2.stroke());
 			/*On déplace le centre du canevas sur le point courant qui va être la base de la flèche*/
 			x2.translate(precX,precY);
 			x2.rotate(-arg);
-			fl_toggled&&x2.fill(new Path2D(fleche(0,0,mod)));//On dessine la flèche
+			//fl_toggled&&x2.fill(new Path2D(fleche(0,0,mod)));//On dessine la flèche
+			arm_toggled&&x2.fillRect(0,0,2,mod);
 			/*
 			if(arm_toggled){	
 				//dessin des rectangles
@@ -88,9 +90,8 @@
 			/*On rétablit la matrice de transformation(->identité) du canevas, ce qui annule la rotation et la translation appliquées auparavant*/
 			x2.setTransform(1,0,0,1,0,0);
 			z=ajoute(z,vecteur_courant);
-			X=z[0]//+CENTRE_X;
-			Y=z[1]//+CENTRE_Y;
-			
+			X=z[0]+CENTRE_X;
+			Y=z[1]+CENTRE_Y;			
 		}
 	
 		//Zoom avec drawImage (Manque de résolution, réfléchir à une approche vectorielle)
@@ -110,7 +111,6 @@
 		x1.fill();
 		
 		frame+=2;
-		t=frame/60;
 		requestAnimationFrame(anim);
 	}
 	anim();

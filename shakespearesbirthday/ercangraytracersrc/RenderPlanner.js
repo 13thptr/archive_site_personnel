@@ -1,7 +1,7 @@
 /**
 * @class RenderPlanner
 */
-export default class RenderPlanner {
+ class RenderPlanner {
     constructor(jobCount, scene, backgroundColor, width, height) {
 
         this.jobCount = jobCount;

@@ -1,7 +1,3 @@
-import RayTracer from './RayTracer.js'
-import Scene from './Scene.js'
-import Sphere from './Sphere.js'
-import Vector3 from './Vector3.js'
 
 var messageHandler = undefined;
 

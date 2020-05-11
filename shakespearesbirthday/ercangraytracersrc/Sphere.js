@@ -1,10 +1,8 @@
-import Vector3 from './Vector3.js';
-import Material from './Material.js';
 
 /**
  * @class Sphere
  */
-export default class Sphere {
+ class Sphere {
     constructor(center, radius, material) {
         this.center = center;
         this.radius = radius;

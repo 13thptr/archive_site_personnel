@@ -1,7 +1,7 @@
 /**
  * @class Scene
  */
-export default class Scene {
+class Scene {
     constructor() {
         this.elements = [];
     }

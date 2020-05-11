@@ -1,12 +1,10 @@
-import Vector3 from './Vector3.js'
-
 const MAX_RAY_DEPTH = 1;
 const INFINITY = 1e8;
 
 /**
  * @class RayTracer
  */
-export default class RayTracer {
+class RayTracer {
     constructor(backgroundColor, scene) {
         this.backgroundColor = backgroundColor;
         this.scene = scene;

@@ -11,3 +11,6 @@ Mots et expressions interdits:
 -Pressé.e (quand l'utilisation n'est pas justifiée)
 -Vite (quand l'utilisation n'est pas justifiée) et l'expression dérivée "Il y a de la vitesse" (jamais justifiable)
 -Canaliser, canalisable et dérivés (incanalisable, canalidansable,etc.)
+-*age
+-*ude
+-*

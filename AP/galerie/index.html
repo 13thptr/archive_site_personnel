@@ -12,11 +12,16 @@
 	<h1>Galerie virtuelle</h1>
 	<p></p>
 	<script src="https://raw.githack.com/mrdoob/three.js/dev/build/three.min.js"></script>
-	<script src="https://rawcdn.githack.com/mrdoob/three.js/r119/examples/js/loaders/GLTFLoader.js"></script>
+	<script>
+	let s=document.createElement("script");
+	s.src=`https://rawcdn.githack.com/mrdoob/three.js/r${THREE.REVISION}/examples/js/loaders/GLTFLoader.js`
+	document.body.appendChild(s);
+	</script>
 	<script src="lib/orbitcontrols.js"></script>
+
 	<script>
 		"use strict";
-
+	
 		let scene = new THREE.Scene();
 		let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 		const LARGEUR=800;

@@ -1,10 +1,12 @@
 puissance=(z,r)=>{
 	//Renvoie z^r avec z un complexe et r un entier positif (TODO:r n'importe quel nombre décimal)
-	let tmp=z;
+	/*let tmp=z;
 	for(let k=1;k<r;k++){
 		tmp=mult(z,tmp)
 	}
-	return tmp;
+	*/
+	return Math.exp(z[0])*e(z);
+	//return tmp;
 }
 
 moduleCarre=complexe=>{

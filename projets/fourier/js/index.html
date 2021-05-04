@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<!--2019 Mehdi Sahtali-->
+<head>
+	<meta charset="utf-8">
+	<title>Epicycloides</title>
+</head>
+<body>
+	<!--
+	La propriété CSS z-index définit l'ordre d'affichage d'éléments qui se superposent. C'est important ici 
+	car l'un des canevas est transparent et l'autre pas.
+	-->
+	<canvas id="c1" style="position:absolute;left:0px;top:0px;z-index:0;"width="768" height="512"></canvas>
+	<canvas id="c2" style="position:absolute;left:0px;top:0px;z-index:1;"width="768" height="512"></canvas>
+	<p style=" position:absolute;left:0px; top:0px;z-index:2;">\begin{aligned}
+		\LARGE{\color{white}{X_{k}}}&amp;\LARGE{\color{white}{
+		=\sum _{n=0}^{N-1}x_{n}
+		\cdot e^{
+		-{\frac {i2\pi }{N}}kn}}}\\&amp;
+
+		\end{aligned}
+	</p>
+	<button id="fl" style="position:absolute;left:10px;top:545px">Cacher les flèches</button>
+	<button id="cl" style="position:absolute;left:10px;top:575px">Montrer les cercles</button>
+	<p id="coefsp" style="position:absolute;left:10px;top:600px">Nombre de coefficients:1000 (Note:modifier les valeurs ci-dessous redémarre l'animation)</p>
+	<input id="coefsNb" type="range" min="1" max="1000" style="position:absolute;left:10px;top:645px">
+	<p id="vitp" style="position:absolute;left:10px;top:655px">Vitesse de l'animation (unité arbitraire):</p>
+	<input id="vitesse" min="5" max="30" step="1" type="range" style="position:absolute;left:10px;top:695px">
+	<p id="zp" style="position:absolute;left:10px;top:710px">Zoom (unité arbitraire)</p>
+	<input id="zoom" min="5" max="30" step="1" type="range" style="position:absolute;left:10px;top:750px">
+
+	<!--Fonctions pour la manipulation des nombres complexes (créées à l'origine pour les programmes Julia/Mandelbrot)-->
+	<script src="libcmplx.js"></script>
+	<!--Points (échantillons de la fonction complexe)-->
+	<script src="coords.js"></script>
+	<!--Script pour afficher la formule-->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+	<!--Script pour la gestion des entrees/fichiers,etc.-->
+	<script src="libutil.js"></script>
+	<script src="main.js"></script>
+	<script>
+	let ZOOM=20;
+	let frame=0;
+	let t=0;
+	const CENTRE_X=256;
+	const CENTRE_Y=256;
+	//Todo:éliminer cette étape
+
+
+	let coefficients=TFD(reformate,1000);
+	coefficients=coefficients.map(e=>[e,argument(e)]);
+	//coefficients.sort(function compare(a,b){coefficients})
+	console.log(coefficients);
+	const N=coefficients.length;
+	
+	//fond noir pour le canevas n°1 (le noir est la couleur par défaut de la méthode fillRect)
+	x1.fillRect(0,0,1024,1024);
+	//une fois le rectangle/fond affiché, on change la couleur de remplissage (jaune)
+	x1.fillStyle="#ffea29";
+	/*-----------Zone dans laquelle on va afficher une portion zoomée de l'image----------*/
+	x1.strokeStyle="#f008";
+	x1.strokeRect(510,80,180,100);
+	x1.font="1cm Computer Modern";
+	x1.fillText("Zoom:",550,50);
+
+	let X=Y=precX=precY=0;
+	let angle=0;
+	x2.fillStyle="#fff";//blanc (flèches)
+	x2.strokeStyle="#0af6";//bleu clair(cercles)
+	function anim(){
+		x2.clearRect(0,0,c2.width,c2.height);//On efface le contenu du canevas
+		
+		angle=2*Math.PI*frame*VITESSE/N;
+		
+		let z=[0,0];
+
+		for(let n=0;n<N;n++){
+			let vecteur_courant=mult(coefficients[n][0],e(angle*n));
+			let mod=module(vecteur_courant);
+			let arg=Math.atan2(vecteur_courant[0],vecteur_courant[1]);
+			precX=z[0]+CENTRE_X;
+			precY=z[1]+CENTRE_Y;
+
+			cl_toggled&&(x2.beginPath(),x2.arc(precX,precY,mod,0,7),x2.stroke())
+			/*On déplace le centre du canevas sur le point courant qui va être la base de la flèche*/
+			x2.translate(precX,precY);
+			x2.rotate(-arg);
+			fl_toggled&&x2.fill(new Path2D(fleche(0,0,mod)));//On dessine la flèche
+			/*On rétablit la matrice de transformation(->identité) du canevas, ce qui annule la rotation et la translation appliquées auparavant*/
+			x2.setTransform(1,0,0,1,0,0);
+			z=ajoute(z,vecteur_courant);
+			X=z[0]+CENTRE_X;
+			Y=z[1]+CENTRE_Y;
+		}
+		//Zoom avec drawImage (Manque de résolution, réfléchir à une approche vectorielle)
+		
+		
+		x2.strokeRect(X-36,Y-20,72,40);
+		c2.imageSmoothingEnabled = false;
+		c1.imageSmoothingEnabled = false;
+		x2.drawImage(c2,X-36,Y-20,72,40,510,80,180,100);
+
+		x1.drawImage(c1,X-36,Y-20,72,40,510,80,180,100);
+		
+		
+		x1.fillRect(X,Y,3,3);
+		
+		frame+=2;
+		t=frame/60;
+		requestAnimationFrame(anim);
+	}
+	anim();
+	</script>
+</body>
+</html>

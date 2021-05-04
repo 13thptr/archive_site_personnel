@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<!--2019 Mehdi Sahtali-->
+<body>
+	<canvas id="c1" width="512" height="512">
+	<canvas id="c2" style=" position:absolute;left:0px; top:0px;z-index:1"width="512" height="512"></canvas>
+		
+	</canvas>
+	<br>
+	<button id="b">Calculer les coefficients de Fourier</button>
+	<p id="coefs">Coefficients:</p>
+	<script src="libcmplx.js"></script>
+	<script>
+
+		const x1=c1.getContext`2d`;
+		const x2=c2.getContext`2d`;
+		let sorted_coords=[];
+		const COEFFICIENTS=1000;
+
+		let img=new Image();
+		img.src="img/shakespeare.jpg";
+		let largeur=0;
+		let hauteur=0;
+
+		img.onload=()=>{
+			largeur=img.width;
+			hauteur=img.height;
+			c1.width=largeur;
+			c1.height=hauteur;
+			x1.drawImage(img,0,0);
+		}
+		//let largeur=512;
+		//let hauteur=512;
+		c1.onclick=e=>{
+			let X=e.x;
+			let Y=e.y;
+			X-=7;
+			Y-=7;
+			x1.beginPath();
+			x1.arc(X,Y,3,0,2*Math.PI);
+			x1.fill();
+			sorted_coords.push([X,Y]);
+			
+		}
+		
+		b.onclick=f=>{
+			//Transformer les coordonnées obtenues en nombres complexes (forme exponentielle/trigonométrique)
+			/*let complexes=sorted_coords.map(
+				e=>{
+					let r=e[0]/500;
+					let i=e[1]/500;
+					return[r,i];
+				});
+				*/
+
+			//let coefficients=TFD(complexes,COEFFICIENTS);
+			
+			
+
+			coefs.innerHTML=sorted_coords.toString();
+			
+	
+			let frame=0;
+		let t=0;
+
+		let coefficients=[];
+		let CENTRE_X=256;
+		let CENTRE_Y=256;
+	
+		let reformate=[];
+		for(let i=0;i<sorted_coords.length;i+=2){
+			reformate.push([sorted_coords[i],sorted_coords[i+1]]);
+		}
+
+		coefficients=TFD(sorted_coords,10);
+
+		console.log(coefficients)
+
+		let N=coefficients.length;
+
+		function u(){
+			c2.width|=0;
+	
+			let X=Y=0;
+			let z=[0,0];//Nombre complexe exprimant la position du nème cercle à un instant t
+			let angle=2*Math.PI*t/N;//inutile de tout recalculer dans la boucle principale
+			for(let n=0;n<N;n++){
+
+				z=ajoute(z,mult(coefficients[n],e(n*angle)));
+				X=z[0]/5;
+				Y=z[1]/5;
+			
+			}
+		x2.stroke();
+		console.log(X,Y)
+		x1.fillRect(X+CENTRE_X,Y+CENTRE_Y,1,1);
+		frame++;
+		t=frame/60;
+		requestAnimationFrame(u)
+		}
+	u();
+}
+
+	
+		
+	
+	</script>
+</body>
+</html>

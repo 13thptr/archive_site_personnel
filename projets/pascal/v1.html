@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	
+	</head>
+	<body>
+		<h1>Triangle de Pascal</h1>
+		<canvas id="c" width="512" height="512"></canvas>
+		<script>
+/*
+2019 Mehdi S.
+Implémentation à base de la formule du calcul du coefficient binomial
+Cette implémentation est assez simple (c'est la première que j'ai réalisée)
+mais résulte en des triangles "brouillés" lorsque le nombre de lignes est trop grand à cause 
+d'approximations faites dans le calcul du coefficient
+(une ou plusieurs des factorielles dépasse MAX_SAFE_INTEGER:
+https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Number/MAX_SAFE_INTEGER)
+*/
+
+const c=document.getElementById("c");
+const ctx=c.getContext("2d");
+const LIGNES=8;
+const COLONNES=8;
+
+/*//Le buffer/la liste  dans lequel/laquelle on va dessiner le triangle de Pascal
+let imageData= new ImageData(COLONNES,LIGNES);
+let data=imageData.data;
+*/
+/*
+Même fonction mais en deux implémentations différentes
+J'ai réalisé un test de performance disponible ici:https://jsperf.com/factorielle-recursive-iterative
+On utilise ici la fonction factorielleIterative
+seulement mais vous pouvez remplacer ses appels par 
+des appels à factorielleRecursive
+*/
+function factorielleRecursive(n)
+{
+	if(n<0){
+		return;
+	}
+	else if(n==0||n==1){
+		return 1;
+	}
+	return n*factorielleRecursive(n-1)
+}
+function factorielleIterative(n)
+{
+	let factorielle=1;
+	if(n<0){
+		return;
+	}
+	else if(n==0||n==1){
+		return 1;
+	}
+	for(let i=1;i<n+1;i++){
+		factorielle*=i;
+	}
+	return factorielle;
+}
+
+function coefficientBinomial(n,p)
+{
+	if(p>n)
+		return 0
+	return factorielleIterative(n)/(factorielleIterative(n-p)*factorielleIterative(p));
+}
+
+let index=0;
+let coef=0;
+let X=0;
+let Y=0;
+
+
+for(X=0;X<COLONNES;X++){
+	for(Y=0;Y<LIGNES;Y++){
+		coef=coefficientBinomial(Y,X);
+		//coef%2!=0&&coef>0&&ctx.fillRect(X*5,Y*5,4,4)
+		ctx.font="8px sans-serif";
+		ctx.fillText(coef,X*12,Y*12);
+	}
+}
+
+
+
+		</script>
+	</body>
+
+</html>

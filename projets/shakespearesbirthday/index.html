@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<!--2019 Mehdi Sahtali-->
+<head>
+	<meta charset="utf-8">
+	<title>A gift for my friend William</title>
+</head>
+<body>
+	
+	<canvas id="c1" style="position:absolute;left:0px;top:0px;z-index:0;"width="768" height="512"></canvas>
+	<canvas id="c2" style="position:absolute;left:0px;top:0px;z-index:1;"width="768" height="512"></canvas>
+	<button id="arm" style="position:absolute;left:10px;top:605px">Hide arm (faster)</button>
+	<button id="restart" style="position:absolute;left:10px;top:635px" onclick="restart()">Restart animation</button>
+	<p style="position:absolute;left:10px;top:645px">Explanation: <br> I wanted to draw a portrait of you, but as I am totally unable to do so in a decent way, I decided to let a creature of metal do the job. What you'll hopefully see when I'm completely done is something mechanical, but I admit it may seem like the Ghost is drawing in front of you right now... you're not supposed to be afraid of these anymore though, are you ? (To attentive watchers: I know there's something odd about the arm, it seems "upside down" in a way-this is a sorting issue which I'll fix soon in an update, along with many other details.)</p>
+	<script src="libcmplx.js"></script>
+	<!--Points (échantillons de la fonction complexe)-->
+	<script src="coords.js"></script>
+	<!--Script pour la gestion des entrees/fichiers,etc.-->
+	<script src="libutil.js"></script>
+	<script>
+	let ZOOM=20;
+	let frame=0;
+	const CENTRE_X=140;
+	const CENTRE_Y=130;
+	//Todo:éliminer cette étape
+	let coefficients=TFD(reformate,1000);
+	coefficients=coefficients.map(e=>[e,module(e)]);
+	const N=coefficients.length;
+	
+	/*coefficients.sort(function(first, second) {
+  		return second[1] - first[1];
+	});
+	*/
+	
+	x1.fillStyle="black";
+	let X=Y=precX=precY=0;
+	let angle=0;
+	let bg=new Image();
+	bg.src="img/wood.jpg";
+	function drawBackground(){
+			x1.scale(4,4);
+			x1.drawImage(bg,0,0);
+			x1.scale(0.25,0.25);
+			x1.fillStyle="tan";
+			x1.fillRect(75,0,400,480);
+			x1.fillStyle="#292929";
+	}
+	bg.onload=()=>{
+		drawBackground();
+	}
+
+	x2.strokeStyle="black";
+	function restart(){
+		x1.clearRect(0,0,c1.width,c1.height);
+		drawBackground();
+		frame=0;//bouhh une globale
+		anim();
+	}
+
+
+	function anim(){
+		x2.clearRect(0,0,c2.width,c2.height);//On efface le contenu du canevas
+		x2.fillStyle="#cd7f32";
+		angle=2*Math.PI*frame*VITESSE/N;
+		
+		let z=[0,0];
+		
+		for(let n=0;n<N;n++){
+			let vecteur_courant=mult(coefficients[n][0],e(angle*n));
+			let mod=module(vecteur_courant);
+			let arg=Math.atan2(vecteur_courant[0],vecteur_courant[1]);
+			precX=z[0]+CENTRE_X;
+			precY=z[1]+CENTRE_Y;
+
+			arm_toggled&&(mod<80)&&(x2.beginPath(),x2.arc(precX,precY,mod,0,7),x2.fill(),x2.stroke());
+			/*On déplace le centre du canevas sur le point courant qui va être la base de la flèche*/
+			x2.translate(precX,precY);
+			x2.rotate(-arg);
+			//fl_toggled&&x2.fill(new Path2D(fleche(0,0,mod)));//On dessine la flèche
+			arm_toggled&&x2.fillRect(0,0,2,mod);
+			/*
+			if(arm_toggled){	
+				//dessin des rectangles
+				//dessin des cercles concentriques
+				//engrenages
+			}
+			*/
+			/*On rétablit la matrice de transformation(->identité) du canevas, ce qui annule la rotation et la translation appliquées auparavant*/
+			x2.setTransform(1,0,0,1,0,0);
+			z=ajoute(z,vecteur_courant);
+			X=z[0]+CENTRE_X;
+			Y=z[1]+CENTRE_Y;			
+		}
+	
+		//Zoom avec drawImage (Manque de résolution, réfléchir à une approche vectorielle)
+		
+		
+		/*x2.strokeRect(X-36,Y-20,72,40);
+		c2.imageSmoothingEnabled = false;
+		c1.imageSmoothingEnabled = false;
+		x2.drawImage(c2,X-36,Y-20,72,40,510,80,180,100);
+
+		x1.drawImage(c1,X-36,Y-20,72,40,510,80,180,100);
+		*/
+		
+		x1.beginPath();
+		//x1.fillRect(X,Y,3,3);
+		x1.arc(X,Y,3,0,7);
+		x1.fill();
+		
+		frame+=2;
+		requestAnimationFrame(anim);
+	}
+	anim();
+	</script>
+</body>
+</html>

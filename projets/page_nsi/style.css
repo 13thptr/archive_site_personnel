@@ -1,0 +1,67 @@
+h1{
+
+text-align: center;
+}
+
+body{
+background: radial-gradient(#d1db07, #deadcafe);
+ 
+}
+
+#page {
+  display: flex;
+  justify-content: space-around;
+}
+
+#page .column1 {
+  margin-left: 150px;
+  margin-right: 75px;
+}
+
+
+#page .column2 {
+  margin-left: 75px;
+  margin-right: 75px;
+}
+
+
+#page .column3 {
+  margin-left: 75px;
+  margin-right: 150px;
+}
+
+
+
+
+
+#page .column1 .small-img {
+  width: 300px;
+  opacity = 0,1;
+}
+#page .column2 .small-img {
+  width: 300px;
+  opacity = 0,1;
+}
+#page .column3 .small-img {
+  width: 300px;
+  opacity = 0,1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 800px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comète de Goldbach</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<!--<link rel="stylesheet" href="default.css">-->
+	<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/monokai-sublime.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<h1>Comète de Goldbach</h1>
+	<i>Merci à @AngelArgalie# pour ses suggestions d'améliorations</i>
+	<p>Page en cours de rédaction...</p>
+	<p>La comète de Goldbach est le tracé de la fonction g(n) qui à un entier naturel pair n associe le nombre de façons de décomposer ce nombre comme une somme de nombres premiers.
+	<br>
+	Elle découle de la conjecture de Goldbach qui stipule que tout nombre entier pair supérieur à 2 peut s'écrire comme une somme de deux nombres premiers.</p>
+	<p>Sur cette page, vous trouverez les différentes itérations de mon implémentation de la comète de Goldbach</p>
+	<h3>Version 1-"naïve":
+		<br>
+	</h3>
+	<p>Mon premier prototype.</p>
+	<pre>
+		<code class="javascript">
+function estPremier(n)
+{
+    //Renvoie 1 si n est premier, 0 sinon
+    if(n<2){return false;}
+    if(n%2==0&&n>2){return false;}
+    for(let i=3;i&lt;n/2;i+=2){
+        if(n%i==0){
+            return false;
+        }
+    }
+
+    return true;
+}
+function goldbach(n,premiers)
+{   
+    /*A un nombre PAIR n strictement SUPERIEUR à 2, 
+    on associe le nombre de façons de décomposer 
+    ce nombre comme une somme de deux nombres premiers
+    */
+    let termes=0;
+
+  
+    for(let k=0;k&lt;n/2+1;k++){
+        if(estPremier(n-k)&&estPremier(k)){
+            termes++;
+            
+        }
+    }
+    
+
+
+    return termes;
+}
+
+const x1=c1.getContext("2d");
+const TAILLE=c1.width;
+
+let premiers=new Uint8Array(TAILLE);
+for(let k=0;k&lt;TAILLE;k++)
+{
+    if(estPremier(k)){
+        premiers[k]=1;
+    }
+    else{
+        premiers[k]=0;
+    }
+}
+let X=0;
+x1.fillRect(0,0,c1.width,c1.height);
+x1.fillStyle="red";
+function u1(){  
+    for(let Y=0;Y&lt;TAILLE/4;Y++){
+        if(goldbach(X,premiers)==Y){
+            x1.fillText("+",X,c1.height-Y*20);
+        }
+    }
+    X+=2
+    requestAnimationFrame(u1);
+}
+		</code>
+	</pre>
+		
+	<p>Cliquer dans le canevas pour lancer l'animation.</p>
+	<canvas id="c1" width="512" height="512" style="border:3px solid #cafe"></canvas>
+	<p>On s'aperçoit rapidement que plusieurs choses peuvent être améliorées:</p>
+	<ul>
+		<li>Les nombres premiers</li>
+	</ul>
+	<p>Itération n°2:Crible d'Eratosthène pour le calcul des nombres premiers</p>
+	<canvas id="c2" width="512" height="512" style="border:3px solid #cafe"></canvas>
+	<p>Itération n°4:Optimisations algorithmiques diverses&Coloration par densité</p>
+	<canvas id="c3" width="512" height="512" style="border:3px solid #cafe"></canvas>
+	<script src="m1.js"></script>
+	<script src="m2.js"></script>
+	<script src="m3.js"></script>
+	<script>
+		"use strict";
+		c1.onclick=()=>u1();
+		c2.onclick=()=>u2();
+		c3.onclick=()=>u3();
+	</script>
+		
+	<p>2019 M.S.</p>
+	<p>Code formaté à l'aide de <a href="https://highlightjs.org">highlight.js</a></p>
+
+
+</body>
+</html>

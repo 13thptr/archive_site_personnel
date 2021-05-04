@@ -1,0 +1,51 @@
+body {
+  background-color: #bc8fff30;
+}
+h1 {
+	color: black;
+	font-family: "";
+}
+p {
+  font-family: "Times New Roman";
+}
+#navbar{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+
+}
+
+.rapide {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+/* css */
+.ou {
+  list-style: none;
+  padding: 0;
+}
+.la{
+  padding: 5px 10px;
+  background-color: #EEEEEE;
+  border: 1px solid #DDDDDD;
+}
+#info-box{
+  background-color:#ff0000ab;
+  width:180px;
+  height:115px;
+
+}

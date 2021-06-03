@@ -44,8 +44,10 @@ function rendu(){
 		ctx.arc(X_crnt,Y_crnt,RAYON_,0,TAU);
 		ctx.fill();
 		//Affichage des nombres
-		MOD<=100&&ctx.fillText(i,X_txt-ctx.measureText(i).width/2,Y_txt+5);
-
+		if(MOD<=100)
+		{
+			ctx.fillText(i,X_txt-ctx.measureText(i).width/2,Y_txt+5);
+		}
 
 		ctx.beginPath();
 		ctx.moveTo(X_crnt,Y_crnt);

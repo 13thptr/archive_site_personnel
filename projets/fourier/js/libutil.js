@@ -3,7 +3,7 @@
 Ce fichier contient:
 	-La definition de la fonction "fleche" qui permet de représenter les vecteurs/nombres complexes dont on fait la somme
 	-Les fonctions qui gèrent les entrées des "sliders"
-	-Le système de sauvegarde par fichiers
+	-Le système de sauvegarde par fichiers (à faire)
 */
 
 
@@ -21,7 +21,7 @@ function fleche(X,Y,u){
 	return`M${X} ${Y} L${X+=base/2} ${Y} L${X} ${Y+=hauteur} L${X+=cote} ${Y} L${X-=centre} ${Y+=perp} L${X-=centre} ${Y-=perp} L${X+=cote} ${Y} L${X} ${Y-=hauteur} Z`;	
 }
 /*
-Renvoie une liste contenant plus de points
+Renvoie une liste contenant plus de points (interpolation linéaire)
 */
 function intercale(points){
 	for(i=0;i<points.length;i+=2){

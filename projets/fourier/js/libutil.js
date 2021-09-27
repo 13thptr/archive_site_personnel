@@ -49,9 +49,9 @@ let VITESSE=1;
 const bouton_fl=document.getElementById`fl`;
 const bouton_cl=document.getElementById`cl`;
 
-const slider_coefs=document.getElementById`coefsNb`;
-const slider_vitesse=document.getElementById`vitesse`;
-const slider_zoom=document.getElementById`zoom`;
+//const slider_coefs=document.getElementById`coefsNb`;
+//const slider_vitesse=document.getElementById`vitesse`;
+//const slider_zoom=document.getElementById`zoom`;
 let fl_toggled=true;
 let cl_toggled=false;
 
@@ -63,7 +63,7 @@ for(let i=0;i<coords.length;i+=2){
 }
 console.log(reformate)
 //Todo:ajouter échelle logarithmique pour le nombre de coefficients
-slider_coefs.oninput=()=>{
+/*slider_coefs.oninput=()=>{
 	frame=0;
 	t=0;
 	NOMBRE_COEFS=slider_coefs.value|0;	
@@ -80,7 +80,7 @@ slider_zoom.oninput=()=>{
 	ZOOM=Number(slider_zoom.value);
 }
 
-
+*/
 
 bouton_fl.onclick=()=>{
 	if(fl_toggled){

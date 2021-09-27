@@ -8,7 +8,7 @@
 <body>
 	<!--
 	La propriété CSS z-index définit l'ordre d'affichage d'éléments qui se superposent. C'est important ici 
-	car l'un des canevas est transparent et l'autre pas.
+	car l'un des canevas est transparent et l'autre non.
 	-->
 	<canvas id="c1" style="position:absolute;left:0px;top:0px;z-index:0;"width="768" height="512"></canvas>
 	<canvas id="c2" style="position:absolute;left:0px;top:0px;z-index:1;"width="768" height="512"></canvas>
@@ -24,8 +24,8 @@
 	<button id="cl" style="position:absolute;left:10px;top:575px">Montrer les cercles</button>
 	<p id="coefsp" style="position:absolute;left:10px;top:600px">Nombre de coefficients:1000 (Note:modifier les valeurs ci-dessous redémarre l'animation)</p>
 	<input id="coefsNb" type="range" min="1" max="1000" style="position:absolute;left:10px;top:645px">
-	<p id="vitp" style="position:absolute;left:10px;top:655px">Vitesse de l'animation (unité arbitraire):</p>
-	<input id="vitesse" min="5" max="30" step="1" type="range" style="position:absolute;left:10px;top:695px">
+	<!--<p id="vitp" style="position:absolute;left:10px;top:655px">Vitesse de l'animation (unité arbitraire):</p>-->
+	<!--<input id="vitesse" min="5" max="30" step="1" type="range" style="position:absolute;left:10px;top:695px">-->
 	<p id="zp" style="position:absolute;left:10px;top:710px">Zoom (unité arbitraire)</p>
 	<input id="zoom" min="5" max="30" step="1" type="range" style="position:absolute;left:10px;top:750px">
 

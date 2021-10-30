@@ -1,0 +1,4 @@
+baseURL = "https://13thptr.github.io/"
+languageCode = "en-us"
+title = "↓"
+theme = "ananke"

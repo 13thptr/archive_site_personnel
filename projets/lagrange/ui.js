@@ -58,12 +58,13 @@ window.addEventListener('load', ()=>{
     c.addEventListener('mouseup',e=>{
         seDeplace=false;
     });
-    btn=document.getElementById('btnajt');
+    /*btn=document.getElementById('btnajt');
     text_switch=1;
     btn.onclick=()=>{
         text_switch^=1;
         btn.innerHTML=["Ajouter des points (cliquer dans le canevas)","Retirer des points (cliquer sur les disques qui les représentent)"][text_switch];
     }
+    */
     slider=document.getElementById`slider`;
     slider.oninput=()=>{
         NB_POINTS=slider.value;

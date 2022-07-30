@@ -2,6 +2,9 @@
 const c=document.getElementById`c`;
 const ctx=c.getContext`2d`;
 /*--Fin initialisation canevas--*/
+
+
+//Beaucoup de variables globales...
 let NB_POINTS=200;
 
 let liste_points=[];//Liste des paires de coordonnées des points.
@@ -9,6 +12,9 @@ let seDeplace=false;
 let indice_point_en_deplacement=-1;
 let distance_carree_point_en_deplacement=0;
 let rayon_disque=10;
+/*---------------------------------------------------Fonctions---------------------------------------------- */
+//Du franglais aussi
+//Inutile de calculer une racine carrée pour la distance, on compare plutôt le carré de la distance au carré du seuil
 function getNearestPointIndexAndDistance(l,X,Y){
     let min_d_squared=c.width**2;
     let index=-1;
@@ -23,7 +29,7 @@ function getNearestPointIndexAndDistance(l,X,Y){
 }
 
 function getMousePosition(canvas, event) {
-    let x=event.clientX - canvas.offsetLeft;
+    let x=event.clientX - canvas.offsetLeft;//eviter les décalages
     let y = event.clientY - canvas.offsetTop;
      //Si le curseur tombe suffisamment près d'un point existant 
     //(moins d'un certain rayon r), alors on ne fait rien. 
@@ -33,56 +39,13 @@ function getMousePosition(canvas, event) {
     if(distance_carree_point_en_deplacement>4*rayon_disque**2){
         //Si le curseur est à plus d'un diamètre de distance du point le plus proche, on peut ajouter un point
         ajouterPoint([x,y]);
-        //dessinerPoints(liste_points);
     }
     indice_point_en_deplacement=g[1];
-    //console.log(liste_points);
+    
 }
-window.addEventListener('load', ()=>{
-    c.addEventListener("mousedown", function(e)
-    {
-        getMousePosition(c, e);
-        seDeplace=true;
-        render();
-    });
-    //document.addEventListener('mouseup', stopPainting);
-    c.addEventListener('mousemove', e => {
-        if (seDeplace === true && distance_carree_point_en_deplacement<=rayon_disque**2) {
-          //On déplace le point le plus proche.
-            liste_points[indice_point_en_deplacement]=[e.x,e.y];
-            //dessinerPoints(liste_points);
-            render();
-        }
-      });
-    c.addEventListener('mouseup',e=>{
-        seDeplace=false;
-    });
-    /*btn=document.getElementById('btnajt');
-    text_switch=1;
-    btn.onclick=()=>{
-        text_switch^=1;
-        btn.innerHTML=["Ajouter des points (cliquer dans le canevas)","Retirer des points (cliquer sur les disques qui les représentent)"][text_switch];
-    }
-    */
-    slider=document.getElementById`slider`;
-    slider.oninput=()=>{
-        NB_POINTS=slider.value;
-        render();
-    }
-    let btn_copie1=document.getElementById`copieFactorise`;
-    let btn_copie2=document.getElementById`copieDvp`;
-    btn_copie1.onclick=()=>{
-        let copyText=localStorage.getItem("chaine_fac");
-        navigator.clipboard.writeText(copyText);
-        alert("Expression polynomiale copiée: " + copyText); 
-    }
-    btn_copie2.onclick=()=>{
-        let copyText=localStorage.getItem("chaine_dvp");
-        navigator.clipboard.writeText(copyText);
-        alert("Expression polynomiale copiée: " + copyText); 
-    }
-});
+    
 
+//La fonction la plus utile
 function ajouterPoint(point){
     liste_points.push(point);
 }
@@ -96,22 +59,7 @@ function dessinerPoints(liste){
         ctx.fill();
     }
 }
-function dessinerRepere(){
-    let midX=c.width/2;
-    let midY=c.height/2;
-    ctx.beginPath();
-    //Axe des ordonnées
-    ctx.fillRect(midX-1,0,1,c.height);
 
-    //Axe des abcisses
-    ctx.fillRect(0,midY-1,c.width,1);
-    //Graduations:
-    const GRAD=16;
-    const pas = (c.width/GRAD);
-    for(i=0;i<GRAD;i++){
-        ctx.fillRect(i*pas*2,midY-5,1,10);
-    }
-}
 
 function render(){
     ctx.clearRect(0,0,c.width,c.height);
@@ -137,4 +85,52 @@ function render(){
         document.getElementById`katexFactorise`.innerHTML=L[2];
     }
 }
+/*---------------------------------------------------Gestionnaire d'événements----------------------------------------------------*/
+window.addEventListener('load', ()=>{
+    c.addEventListener("mousedown", function(e)
+    {
+        getMousePosition(c, e);
+        seDeplace=true;
+        render();
+    });
+    c.addEventListener('mousemove', e => {
+        if (seDeplace === true && distance_carree_point_en_deplacement<=rayon_disque**2) {
+          //On déplace le point le plus proche.
+            liste_points[indice_point_en_deplacement]=[e.x,e.y];
+            render();
+        }
+      });
+    c.addEventListener('mouseup',e=>{
+        seDeplace=false;
+    });
+    //TODO: Permettre la suppression de points
+
+    /*btn=document.getElementById('btnajt');
+    text_switch=1;
+    btn.onclick=()=>{
+        text_switch^=1;
+        btn.innerHTML=["Ajouter des points (cliquer dans le canevas)","Retirer des points (cliquer sur les disques qui les représentent)"][text_switch];
+    }
+    */
+
+    //Curseur qui permet d'ajuster le nombre de points, ou, de façon équivalente, le pas de tracé de la fonction polynomiale.
+    slider=document.getElementById`slider`;
+    slider.oninput=()=>{
+        NB_POINTS=slider.value;
+        render();
+    }
+    
+    let btn_copie1=document.getElementById`copieFactorise`;
+    let btn_copie2=document.getElementById`copieDvp`;
+    btn_copie1.onclick=()=>{
+        let copyText=localStorage.getItem("chaine_fac");
+        navigator.clipboard.writeText(copyText);
+        alert("Expression polynomiale copiée: " + copyText); 
+    }
+    btn_copie2.onclick=()=>{
+        let copyText=localStorage.getItem("chaine_dvp");
+        navigator.clipboard.writeText(copyText);
+        alert("Expression polynomiale copiée: " + copyText); 
+    }
+});
 render();

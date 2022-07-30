@@ -1,4 +1,3 @@
-
 /*--Début initialisation canevas--*/
 const c=document.getElementById`c`;
 const ctx=c.getContext`2d`;
@@ -70,6 +69,18 @@ window.addEventListener('load', ()=>{
         NB_POINTS=slider.value;
         render();
     }
+    let btn_copie1=document.getElementById`copieFactorise`;
+    let btn_copie2=document.getElementById`copieDvp`;
+    btn_copie1.onclick=()=>{
+        let copyText=localStorage.getItem("chaine_fac");
+        navigator.clipboard.writeText(copyText);
+        alert("Expression polynomiale copiée: " + copyText); 
+    }
+    btn_copie2.onclick=()=>{
+        let copyText=localStorage.getItem("chaine_dvp");
+        navigator.clipboard.writeText(copyText);
+        alert("Expression polynomiale copiée: " + copyText); 
+    }
 });
 
 function ajouterPoint(point){
@@ -79,6 +90,7 @@ function dessinerPoints(liste){
     for(i in liste){
         let X=liste[i][0];
         let Y=liste[i][1];     
+        ctx.fillText(`${changementRepereX(X,0).toFixed(2)},${changementRepereY(Y,0).toFixed(2)}`,X,Y-rayon_disque);
         ctx.beginPath();
         ctx.arc(X,Y,rayon_disque,0,2*Math.PI);
         ctx.fill();
@@ -100,10 +112,29 @@ function dessinerRepere(){
         ctx.fillRect(i*pas*2,midY-5,1,10);
     }
 }
+
 function render(){
     ctx.clearRect(0,0,c.width,c.height);
     //dessinerRepere();
     dessinerPoints(liste_points);
-    tracePoly(Lagrange(liste_points),NB_POINTS);
+    
+    let L=Lagrange(liste_points);
+    tracePoly(L[0],NB_POINTS);
+    let chaine_latex_dvp=L[0].toString();//.replace(/x/gi,"X")
+    localStorage.setItem("chaine_dvp",chaine_latex_dvp);
+    localStorage.setItem("chaine_fac",L[2]);
+    katex.render(chaine_latex_dvp, document.getElementById`katexDvp`, {
+        throwOnError: true
+    });
+    if(L[0].degree()<4){
+        //On n'affiche le LaTeX que s'il y a moins de 5 points, sinon le rendu est trop lent. 
+        //(Ce seuil est arbitraire,je l'ai choisi en fonction de mon PC)
+        katex.render(L[1], document.getElementById`katexFactorise`, {
+            throwOnError: true
+        });
+    }
+    else{
+        document.getElementById`katexFactorise`.innerHTML=L[2];
+    }
 }
 render();

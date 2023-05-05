@@ -34,22 +34,51 @@
             pY.innerHTML=`Accélération selon l'axe Y:${aY}`;
             pZ.innerHTML=`Accélération selon l'axe Z:${aZ}`;
                 
-            if(aX>3){
-            }
+            if(aX>3){}
             });
 
             acl.start();
-            var contexteAudio = new (window.AudioContext || window.webkitAudioContext)();
-
-            // create Oscillator node
-            var oscillator = contexteAudio.createOscillator();
-            oscillator.connect(contexteAudio.destination);
-            oscillator.type = 'square';
-            oscillator.frequency.value = 440; // valeur en hertz
-
-            oscillator.start();
+            
 
 
         </script>
+
+        <!--https://codepen.io/jonoliver/pen/NoawPv-->
+        <select id="wave">
+            <option value="sine">sine</option>
+            <option value="triangle">triangle</option>
+            <option value="square">square</option>
+            <option value="sawtooth">sawtooth</option>
+          </select>
+          <input id="volume" type="range" min="0" max="100" value="0" />
+          <input id="frequency" type="range" min="110" max="880" value="440" />
+          <script>
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.value = 440; // value in hertz
+
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 0;
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.start();
+
+            document.addEventListener('click', () => audioContext.resume(), { once: true });
+
+            document.querySelector('#wave').addEventListener('change', (e) => {
+            oscillator.type = e.target.value;
+            });
+
+            document.querySelector('#frequency').addEventListener('input', (e) => {
+            oscillator.frequency.value = e.target.value;
+            });
+
+            document.querySelector('#volume').addEventListener('input', (e) => {
+            gainNode.gain.value = e.target.value * 0.01;
+            });
+          </script>
     </body>
 </html>

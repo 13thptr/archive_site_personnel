@@ -18,17 +18,36 @@
             const pX = document.getElementById("accX");
             const pY = document.getElementById("accY");
             const pZ = document.getElementById("accZ");
-
+            
+            let aX=0;
+            let aY=0;
+            let aZ=0;
             console.log("works");
             const acl = new Accelerometer({ frequency: 60 });
+
             acl.addEventListener("reading", () => 
             {
-            pX.innerHTML=`Accélération selon l'axe X: ${acl.x.toFixed(5)}`;
-            pY.innerHTML=`Accélération selon l'axe Y:${acl.y.toFixed(5)}`;
-            pZ.innerHTML=`Accélération selon l'axe Y:${acl.y.toFixed(5)}`;
+            aX=acl.x.toFixed(5);
+            aY=acl.y.toFixed(5);
+            aZ=acl.z.toFixed(5);
+            pX.innerHTML=`Accélération selon l'axe X: ${aX}`;
+            pY.innerHTML=`Accélération selon l'axe Y:${aY}`;
+            pZ.innerHTML=`Accélération selon l'axe Z:${aZ}`;
+                
+            if(aX>3){
+            }
             });
 
             acl.start();
+            var contexteAudio = new (window.AudioContext || window.webkitAudioContext)();
+
+            // create Oscillator node
+            var oscillator = contexteAudio.createOscillator();
+            oscillator.connect(contexteAudio.destination);
+            oscillator.type = 'square';
+            oscillator.frequency.value = 440; // valeur en hertz
+
+            oscillator.start();
 
 
         </script>

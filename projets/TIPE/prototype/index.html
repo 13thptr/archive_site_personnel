@@ -5,7 +5,12 @@
         <title>Prototype TIPE</title>
     </head>
     <body>
+        <p id="a">
+            Acceleration
+        </p>
         <script>
+            const p=document.getElementById("a");
+
             console.log("works");
             const acl = new Accelerometer({ frequency: 60 });
             acl.addEventListener("reading", () => 
@@ -13,9 +18,13 @@
             console.log(`Acceleration along the X-axis ${acl.x}`);
             console.log(`Acceleration along the Y-axis ${acl.y}`);
             console.log(`Acceleration along the Z-axis ${acl.z}`);
+            p.innerHTML=`Acceleration along the X-axis ${acl.x}`+"\n";
+            p.innerHTML+=`Acceleration along the Y-axis ${acl.y}`+"\n";
+            p.innerHTML+=`Acceleration along the Z-axis ${acl.z}`;
             });
 
             acl.start();
+
 
         </script>
     </body>

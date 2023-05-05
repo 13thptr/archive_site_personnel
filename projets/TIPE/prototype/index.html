@@ -5,22 +5,27 @@
         <title>Prototype TIPE</title>
     </head>
     <body>
-        <p id="a">
-            Acceleration
+        <p id="accX">
+            Accélération selon l'axe X:
+        </p>
+        <p id="accY">
+            Accélération selon l'axe Y:
+        </p>
+        <p id="accZ">
+            Accélération selon l'axe Z:
         </p>
         <script>
-            const p=document.getElementById("a");
+            const pX = document.getElementById("accX");
+            const pY = document.getElementById("accY");
+            const pZ = document.getElementById("accZ");
 
             console.log("works");
             const acl = new Accelerometer({ frequency: 60 });
             acl.addEventListener("reading", () => 
             {
-            console.log(`Acceleration along the X-axis ${acl.x}`);
-            console.log(`Acceleration along the Y-axis ${acl.y}`);
-            console.log(`Acceleration along the Z-axis ${acl.z}`);
-            p.innerHTML=`Acceleration along the X-axis ${acl.x}`+"\n";
-            p.innerHTML+=`Acceleration along the Y-axis ${acl.y}`+"\n";
-            p.innerHTML+=`Acceleration along the Z-axis ${acl.z}`;
+            pX.innerHTML=`Accélération selon l'axe X: ${acl.x.toFixed(5)}`;
+            pY.innerHTML=`Accélération selon l'axe Y:${acl.y.toFixed(5)}`;
+            pZ.innerHTML=`Accélération selon l'axe Y:${acl.y.toFixed(5)}`;
             });
 
             acl.start();

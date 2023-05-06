@@ -5,6 +5,26 @@
         <title>Prototype TIPE</title>
     </head>
     <body>
+        <button id="dmr">Démarrer</button>
+        <!--Un clic sur le bouton "Démarrer" entraîne l'enregistrement de la position et de l'attitude actuelles du téléphone-->
+        <button id="lnc">Lancer</button>
+       
+        <!--
+          Un clic sur le bouton "Lancer" entraîne l'exécution de la procédure suivante:
+          1)Appel de la fonction/procédure "réglage azimutal" et attente jusqu'à complétion/réalisation
+          2)Calcul de la distance à la cible
+          3)Calcul des deux paramètres pertinents (angle et vitesse initiale) pour le lancer en fonction de la distance à la cible
+          (NB:
+          On peut effectuer plusieurs trajectoires différentes de même portée en jouant sur ce couple angle/vitesse,
+          pour trancher, prendre en compte des contraintes de sécurité (ex: contrainte sur la flèche de la trajectoire) et/ou
+          de performance->Analyser des données pour voir si le joueur est plus précis sur l'angle/la vitesse et sur quelles plages de valeurs.)
+
+          4)Appel de la fonction/procédure "réglage de la hauteur" et attente jusqu'à complétion/réalisation
+          5)Appel de la fonction/procédure "réglage de la vitesse" et attente jusqu'à complétion/réalisation
+          6)Signal à l'utilisateur "Tout est bon, vous pouvez lancer au prochain maximum de hauteur."
+        -->
+        <button id="alr">Annuler</button>
+
         <p id="accX">Accélération selon l'axe X:</p>
         <p id="accY">Accélération selon l'axe Y:</p>
         <p id="accZ">Accélération selon l'axe Z:</p>
@@ -20,37 +40,7 @@
           </select>
           <input id="volume" type="range" min="0" max="100" value="0" />
           <input id="frequency" type="range" min="110" max="880" value="440" />
-          <script>
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.frequency.value = 440; // value in hertz
-
-            const gainNode = audioContext.createGain();
-            gainNode.gain.value = 0;
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.start();
-
-            document.addEventListener('click', () => audioContext.resume(), { once: true });
-
-            document.querySelector('#wave').addEventListener('change', (e) => {
-            oscillator.type = e.target.value;
-            });
-
-            /*document.querySelector('#frequency').addEventListener('input', (e) => {
-            oscillator.frequency.value = e.target.value;
-            });
-            */
-            
-
-            document.querySelector('#volume').addEventListener('input', (e) => {
-            gainNode.gain.value = e.target.value * 0.01;
-            });
-
-          </script>
-           <script src ="main.js"></script>
+          <script src ="audio.js"></script>
+          <script src ="main.js"></script>
     </body>
 </html>

@@ -11,6 +11,8 @@ gainNode.connect(audioContext.destination);
 
 oscillator.start();
 
+//La ligne suivante permettrait de démarrer véritablement le contexte audio dans le cas où il serait créé
+//avant une interaction utilisateur, et donc automatiquement mis en mode inactif par le navigateur.
 document.addEventListener('click', () => audioContext.resume(), { once: true });
 
 document.querySelector('#wave').addEventListener('change', (e) => {
@@ -26,3 +28,43 @@ oscillator.frequency.value = e.target.value;
 document.querySelector('#volume').addEventListener('input', (e) => {
     gainNode.gain.value = e.target.value * 0.01;
 });
+
+
+//Mon code
+let dmr= document.getElementById("dmr");
+//https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices
+
+function populateVoiceList() {
+    if (typeof speechSynthesis === "undefined") {
+      return;
+    }
+  
+    const voices = speechSynthesis.getVoices();
+  
+    for (let i = 0; i < voices.length; i++) {
+      const option = document.createElement("option");
+      option.textContent = `${voices[i].name} (${voices[i].lang})`;
+  
+      if (voices[i].default) {
+        option.textContent += " — DEFAULT";
+      }
+  
+      option.setAttribute("data-lang", voices[i].lang);
+      option.setAttribute("data-name", voices[i].name);
+      document.getElementById("voiceSelect").appendChild(option);
+    }
+  }
+  
+  populateVoiceList();
+  if (
+    typeof speechSynthesis !== "undefined" &&
+    speechSynthesis.onvoiceschanged !== undefined
+  ) {
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+  }
+  
+dmr.onclick=()=>{
+    
+    let utterance = new SpeechSynthesisUtterance("Boulodromos");
+    speechSynthesis.speak(utterance);
+};

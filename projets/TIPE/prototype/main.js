@@ -22,6 +22,7 @@ const paX = document.getElementById("accX");
             */
             window.addEventListener("deviceorientation", (event) => {
                 poZ.innerHTML=`${event.alpha.toFixed(2)} : ${event.beta.toFixed(2)} : ${event.gamma.toFixed(2)}`;
+                oscillator.frequency.value=event.alpha.toFixed(2)*25;
             });
             
             let aX=0;
@@ -38,6 +39,7 @@ const paX = document.getElementById("accX");
             paX.innerHTML=`Accélération selon l'axe X: ${aX}`;
             paY.innerHTML=`Accélération selon l'axe Y:${aY}`;
             paZ.innerHTML=`Accélération selon l'axe Z:${aZ}`;
+            
                 
             if(aX>3){}
             });

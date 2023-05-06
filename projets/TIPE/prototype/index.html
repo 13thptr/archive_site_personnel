@@ -9,7 +9,7 @@
         <p id="accY">Accélération selon l'axe Y:</p>
         <p id="accZ">Accélération selon l'axe Z:</p>
         <p id="oriZ"> Orientation Z (azimut)</p>
-        <script src ="main.js"></script>
+       
 
         <!--https://codepen.io/jonoliver/pen/NoawPv-->
         <select id="wave">
@@ -27,7 +27,7 @@
             oscillator.frequency.value = 440; // value in hertz
 
             const gainNode = audioContext.createGain();
-            gainNode.gain.value = 0.5;
+            gainNode.gain.value = 0;
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
@@ -40,13 +40,17 @@
             oscillator.type = e.target.value;
             });
 
-            document.querySelector('#frequency').addEventListener('input', (e) => {
+            /*document.querySelector('#frequency').addEventListener('input', (e) => {
             oscillator.frequency.value = e.target.value;
             });
+            */
+            
 
             document.querySelector('#volume').addEventListener('input', (e) => {
             gainNode.gain.value = e.target.value * 0.01;
             });
+
           </script>
+           <script src ="main.js"></script>
     </body>
 </html>

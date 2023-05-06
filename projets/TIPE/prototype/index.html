@@ -5,18 +5,10 @@
         <title>Prototype TIPE</title>
     </head>
     <body>
-        <p id="accX">
-            Accélération selon l'axe X:
-        </p>
-        <p id="accY">
-            Accélération selon l'axe Y:
-        </p>
-        <p id="accZ">
-            Accélération selon l'axe Z:
-        </p>
-        <p id="oriZ">
-            Orientation Z (azimut)
-        </p>
+        <p id="accX">Accélération selon l'axe X:</p>
+        <p id="accY">Accélération selon l'axe Y:</p>
+        <p id="accZ">Accélération selon l'axe Z:</p>
+        <p id="oriZ"> Orientation Z (azimut)</p>
         <script src ="main.js"></script>
 
         <!--https://codepen.io/jonoliver/pen/NoawPv-->
@@ -35,7 +27,7 @@
             oscillator.frequency.value = 440; // value in hertz
 
             const gainNode = audioContext.createGain();
-            gainNode.gain.value = 0;
+            gainNode.gain.value = 0.5;
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);

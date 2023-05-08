@@ -31,7 +31,7 @@ document.querySelector('#volume').addEventListener('input', (e) => {
 
 
 //Mon code
-let dmr= document.getElementById("dmr");
+
 //https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices
 
 function populateVoiceList() {
@@ -62,9 +62,11 @@ function populateVoiceList() {
   ) {
     speechSynthesis.onvoiceschanged = populateVoiceList;
   }
-  
+
+
+let dmr= document.getElementById("dmr");
 dmr.onclick=()=>{
-    
-    let utterance = new SpeechSynthesisUtterance("Boulodromos");
+    let phrase="Position initialisée. Vous pouvez avancer jusqu'au point de tir avant de cliquer sur le bouton";
+    let utterance = new SpeechSynthesisUtterance(phrase);
     speechSynthesis.speak(utterance);
 };

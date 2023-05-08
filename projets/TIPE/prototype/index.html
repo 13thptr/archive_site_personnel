@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Prototype TIPE</title>
-    </head>
-    <body>
-        <button id="dmr">Démarrer</button>
-        <!--Un clic sur le bouton "Démarrer" entraîne l'enregistrement de la position et de l'attitude actuelles du téléphone-->
-        <button id="lnc">Lancer</button>
-       
-        <!--
+
+<head>
+  <meta charset="utf-8">
+  <title>Prototype TIPE</title>
+</head>
+
+<body>
+  <select id="voiceSelect"></select>
+
+  <button id="dmr">Démarrer</button>
+  <!--Un clic sur le bouton "Démarrer" entraîne l'enregistrement de la position et de l'attitude actuelles du téléphone-->
+  <button id="lnc">Lancer</button>
+
+  <!--
           Un clic sur le bouton "Lancer" entraîne l'exécution de la procédure suivante:
           1)Appel de la fonction/procédure "réglage azimutal" et attente jusqu'à complétion/réalisation
           2)Calcul de la distance à la cible
@@ -23,24 +27,22 @@
           5)Appel de la fonction/procédure "réglage de la vitesse" et attente jusqu'à complétion/réalisation
           6)Signal à l'utilisateur "Tout est bon, vous pouvez lancer au prochain maximum de hauteur."
         -->
-        <button id="alr">Annuler</button>
+  <button id="alr">Annuler</button>
 
-        <p id="accX">Accélération selon l'axe X:</p>
-        <p id="accY">Accélération selon l'axe Y:</p>
-        <p id="accZ">Accélération selon l'axe Z:</p>
-        <p id="oriZ"> Orientation Z (azimut)</p>
-       
+  <p id="accX">Accélération selon l'axe X:</p>
+  <p id="accY">Accélération selon l'axe Y:</p>
+  <p id="accZ">Accélération selon l'axe Z:</p>
+  <p id="oriZ"> Orientation Z (azimut)</p>
 
-        <!--https://codepen.io/jonoliver/pen/NoawPv-->
-        <select id="wave">
-            <option value="sine">sine</option>
-            <option value="triangle">triangle</option>
-            <option value="square">square</option>
-            <option value="sawtooth">sawtooth</option>
-          </select>
-          <input id="volume" type="range" min="0" max="100" value="0" />
-          <input id="frequency" type="range" min="110" max="880" value="440" />
-          <script src ="audio.js"></script>
-          <script src ="main.js"></script>
-    </body>
+
+  <!--https://codepen.io/jonoliver/pen/NoawPv-->
+  <select id="wave">
+    <option value="sine">sine</option>
+  </select>
+  <input id="volume" type="range" min="0" max="100" value="0" />
+  <input id="frequency" type="range" min="110" max="880" value="440" />
+  <script src="audio.js"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>
